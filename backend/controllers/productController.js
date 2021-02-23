@@ -1,20 +1,21 @@
 const Product = require("../models/product");
 const ErrorHandler = require("../utils/errorHandler");
+const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 
 //creating a product  => /api/v1/admin/product/new
 
-exports.newProduct = async (req, res, next) => {
-  let product = Product.create(req.body);
+exports.newProduct = catchAsyncErrors(async (req, res, next) => {
+  let product = await Product.create(req.body);
 
   res.status(201).json({
     success: true,
     message: "Product successfiully created",
     product: product,
   });
-};
+});
 
 //get all products => /api/v1/products
-exports.getProduct = async (req, res, next) => {
+exports.getProduct = catchAsyncErrors(async (req, res, next) => {
   const products = await Product.find();
 
   res.status(200).json({
@@ -22,11 +23,11 @@ exports.getProduct = async (req, res, next) => {
     count: products.length,
     products,
   });
-};
+});
 
 //getsingle product details => /api/v1/product/:id
 
-exports.getsingleProduct = async (req, res, next) => {
+exports.getsingleProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -37,11 +38,11 @@ exports.getsingleProduct = async (req, res, next) => {
     success: true,
     product,
   });
-};
+});
 
 // update product => /api/v1/admin/product/:id
 
-exports.updateProduct = async (req, res, next) => {
+exports.updateProduct = catchAsyncErrors(async (req, res, next) => {
   try {
     let product = await Product.findById(req.params.id);
 
@@ -68,11 +69,11 @@ exports.updateProduct = async (req, res, next) => {
   } catch (err) {
     console.log("Error in update", err);
   }
-};
+});
 
 // delete product => /api/v1/admin/product/:id
 
-exports.deleteProduct = async (req, res, next) => {
+exports.deleteProduct = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.params.id);
 
   if (!product) {
@@ -87,4 +88,4 @@ exports.deleteProduct = async (req, res, next) => {
     success: true,
     message: "Product is deleted",
   });
-};
+});
