@@ -4,8 +4,6 @@ const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const jwt = require("jsonwebtoken");
 
-dotenv.config({ path: "backend/config/config.env" });
-
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
