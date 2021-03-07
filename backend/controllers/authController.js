@@ -75,6 +75,53 @@ exports.logoutUser = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+//getting loggedIn user details /api/v1/me
+
+exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id);
+
+  return res.status(200).json({
+    success: true,
+    user,
+  });
+});
+
+//updating password  /api/v1/password/update
+
+exports.updatePassword = catchAsyncErrors(async (req, res, next) => {
+  const user = await User.findById(req.user.id).select("+password");
+
+  const isMatched = await user.comparePassword(req.body.oldPassword);
+
+  if (!isMatched) {
+    return next(new ErrorHandler("old Password is incorrect", 500));
+  }
+
+  user.password = req.body.password;
+  await user.save();
+
+  sendToken(user, 200, res);
+});
+
+// update profile /api/v1/me/update
+
+exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
+  const newUserData = {
+    name: req.body.name,
+    email: req.body.email,
+  };
+
+  const user = await User.findByIdAndUpdate(req.user.id, newUserData, {
+    new: true,
+    runValidators: true,
+    useFindAndModify: false,
+  });
+
+  res.status(200).json({
+    success: true,
+  });
+});
+
 // Forgot Password   =>  /api/v1/password/forgot
 
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
@@ -92,7 +139,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
   // Create reset password url
   const resetUrl = `${req.protocol}://${req.get(
     "host"
-  )}/password/reset/${resetToken}`;
+  )}/api/v1/password/reset/${resetToken}`;
 
   const message = `Your password reset token is as follow:\n\n${resetUrl}\n\nIf you have not requested this email, then ignore it.`;
 
