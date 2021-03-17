@@ -19,7 +19,7 @@ exports.newProduct = catchAsyncErrors(async (req, res, next) => {
 //get all products => /api/v1/products
 exports.getProduct = catchAsyncErrors(async (req, res, next) => {
   const resPerPage = 4;
-  const productCount = await Product.countDocuments();
+  const productsCount = await Product.countDocuments();
 
   const apiFeatures = new APIFeatures(Product.find(), req.query) // also I can only pass Product instead of Product.find()
     .search()
@@ -30,9 +30,9 @@ exports.getProduct = catchAsyncErrors(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    count: products.length,
-    productCount,
+    productsCount,
     products,
+    resPerPage,
   });
 });
 
