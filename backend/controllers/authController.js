@@ -5,18 +5,32 @@ const catchAsyncErrors = require("../middlewares/catchAsyncErrors");
 const sendToken = require("../utils/jwtToken");
 const sendEmail = require("../utils/sendEmail");
 const crypto = require("crypto");
+const cloudinary = require("cloudinary");
 
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   const { name, email, password } = req.body;
+
+  if (!email || !password || !name) {
+    return next(new ErrorHandler("Please Fill all Details", 400));
+  }
+
+  if (!req.body.avatar) {
+    return next(new ErrorHandler("Please select your avatar", 400));
+  }
+
+  const result = await cloudinary.v2.uploader.upload_large(req.body.avatar, {
+    folder: "avatars",
+    width: 150,
+    crop: "scale",
+  });
 
   const user = await User.create({
     name,
     email,
     password,
     avatar: {
-      public_id: "avatars/kccvibpsuiusmwfepb3m",
-      url:
-        "https://res.cloudinary.com/shopit/image/upload/v1606305757/avatars/kccvibpsuiusmwfepb3m.png",
+      public_id: result.public_id,
+      url: result.secure_url,
     },
   });
 
