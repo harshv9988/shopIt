@@ -35,10 +35,10 @@ exports.registerUser = catchAsyncErrors(async (req, res, next) => {
   });
 
   const token = user.getJwtToken();
+  sendToken(user, 200, res);
 
   res.status(201).json({
     success: true,
-    token,
   });
 });
 
