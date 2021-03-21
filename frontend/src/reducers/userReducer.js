@@ -51,7 +51,6 @@ export const authReducer = (state = { user: {} }, action) => {
       };
 
     case LOGIN_FAIL:
-
     case REGISTER_USER_FAIL:
       return {
         ...state,
@@ -94,6 +93,12 @@ export const userReducer = (state = {}, action) => {
         isUpdated: action.payload,
       };
 
+    case UPDATE_PROFILE_RESET:
+      return {
+        ...state,
+        isUpdated: false,
+      };
+
     case UPDATE_PROFILE_FAIL:
       return {
         ...state,
@@ -101,10 +106,10 @@ export const userReducer = (state = {}, action) => {
         error: action.payload,
       };
 
-    case UPDATE_PROFILE_RESET:
+    case CLEAR_ERRORS:
       return {
         ...state,
-        isUpdated: false,
+        error: null,
       };
 
     default:
