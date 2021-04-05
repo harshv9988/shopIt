@@ -5,17 +5,31 @@ import MetaData from "../layout/MetaData";
 
 import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "../../actions/cartActions";
+import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
 
-  const decreaseQty = () => {};
+  const increaseQty = (id, quantity, stock) => {
+    const newQty = quantity + 1;
 
-  const increaseQty = () => {};
+    if (newQty > stock) return;
 
-  const removeCartItemHandler = () => {};
+    dispatch(addItemToCart(id, newQty));
+  };
+
+  const decreaseQty = (id, quantity) => {
+    const newQty = quantity - 1;
+
+    if (newQty <= 0) return;
+
+    dispatch(addItemToCart(id, newQty));
+  };
+
+  const removeCartItemHandler = (id) => {
+    dispatch(removeItemFromCart(id));
+  };
 
   const checkoutHandler = () => [];
 
@@ -33,7 +47,7 @@ const Cart = () => {
           <div className="row d-flex justify-content-between">
             <div className="col-12 col-lg-8">
               {cartItems.map((item) => (
-                <Fragment>
+                <>
                   <hr />
 
                   <div className="cart-item" key={item.product}>
@@ -48,9 +62,7 @@ const Cart = () => {
                       </div>
 
                       <div className="col-5 col-lg-3">
-                        <Link to={`/products/${item.product}`}>
-                          {item.name}
-                        </Link>
+                        <Link to={`/product/${item.product}`}>{item.name}</Link>
                       </div>
 
                       <div className="col-4 col-lg-2 mt-4 mt-lg-0">
@@ -100,7 +112,7 @@ const Cart = () => {
                     </div>
                   </div>
                   <hr />
-                </Fragment>
+                </>
               ))}
             </div>
 
