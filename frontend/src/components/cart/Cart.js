@@ -7,7 +7,7 @@ import { useAlert } from "react-alert";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart, removeItemFromCart } from "../../actions/cartActions";
 
-const Cart = () => {
+const Cart = ({ history }) => {
   const dispatch = useDispatch();
   const { cartItems } = useSelector((state) => state.cart);
 
@@ -31,7 +31,9 @@ const Cart = () => {
     dispatch(removeItemFromCart(id));
   };
 
-  const checkoutHandler = () => [];
+  const checkoutHandler = () => {
+    history.push("/login?redirect=shipping");
+  };
 
   return (
     <>
