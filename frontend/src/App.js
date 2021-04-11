@@ -17,6 +17,7 @@ import ConfirmOrder from "./components/cart/ConfirmOrder";
 import Payment from "./components/cart/Payment";
 import OrderSuccess from "./components/cart/OrderSuccess";
 import ListOrders from "./components/order/ListOrders";
+import OrderDetails from "./components/order/OrderDetails";
 
 import Cart from "./components/cart/Cart";
 
@@ -62,7 +63,9 @@ function App() {
             component={UpdatePassword}
             exact
           />
+
           <ProtectedRoute path="/orders/me" component={ListOrders} exact />
+          <ProtectedRoute path="/details/:id" component={OrderDetails} exact />
           {console.log("api", stripeApiKey)}
           {stripeApiKey && (
             <Elements stripe={loadStripe(stripeApiKey)}>

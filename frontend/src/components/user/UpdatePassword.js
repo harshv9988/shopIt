@@ -17,11 +17,6 @@ const UpdatePassword = ({ history }) => {
   const { error, isUpdated, loading } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (error) {
-      alert.error(error);
-      dispatch(clearErrors());
-    }
-
     if (isUpdated) {
       alert.success("Password updated successfully");
 
@@ -31,7 +26,14 @@ const UpdatePassword = ({ history }) => {
         type: UPDATE_PASSWORD_RESET,
       });
     }
-  }, [dispatch, alert, error, history, isUpdated]);
+  }, [dispatch, history, isUpdated]);
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error);
+      dispatch(clearErrors());
+    }
+  }, [alert, error]);
 
   const submitHandler = (e) => {
     e.preventDefault();

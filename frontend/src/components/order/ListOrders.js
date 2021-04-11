@@ -72,7 +72,7 @@ const ListOrders = () => {
           ),
 
         actions: (
-          <Link to={`/order/${order._id}`}>
+          <Link to={`/details/${order._id}`}>
             <i className="fa fa-eye"></i>
           </Link>
         ),
