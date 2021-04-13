@@ -13,6 +13,8 @@ import MetaData from "../layout/MetaData";
 import { addItemToCart } from "../../actions/cartActions";
 import { NEW_REVIEW_RESET } from "../../constants/productConstants";
 
+import ListReviews from "../review/ListReviews";
+
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
   const [quantity, setQuantity] = useState(1);
@@ -306,6 +308,9 @@ const ProductDetails = ({ match }) => {
               </div>
             </div>
           </div>
+          {product.reviews && product.reviews.length > 0 && (
+            <ListReviews reviews={product.reviews} />
+          )}
         </>
       )}
     </>
