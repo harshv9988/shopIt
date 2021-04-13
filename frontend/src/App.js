@@ -24,8 +24,11 @@ import Cart from "./components/cart/Cart";
 //admin
 import dashboard from "./components/admin/Dashboard";
 import ProductsList from "./components/admin/ProductsList";
+import NewProduct from "./components/admin/NewProduct";
 
 import ProtectedRoute from "./components/route/ProtectedRoute";
+
+import { useSelector } from "react-redux";
 
 import { loadUser } from "./actions/userActions";
 import store from "./store";
@@ -34,6 +37,7 @@ import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import Dashboard from "./components/admin/Dashboard";
+import { userReducer } from "./reducers/userReducer";
 
 function App() {
   const dispatch = useDispatch();
@@ -50,6 +54,8 @@ function App() {
 
     getStripeApiKey();
   }, []);
+
+  const { user, loading } = useSelector((state) => state.auth);
 
   return (
     <Router>
@@ -100,7 +106,13 @@ function App() {
           component={ProductsList}
           exact
         />
-        <Footer />
+        <ProtectedRoute
+          path="/admin/product"
+          isAdmin={true}
+          component={NewProduct}
+          exact
+        />
+        {!loading && user.role !== "admin" && <Footer />}
       </div>
     </Router>
   );

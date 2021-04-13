@@ -46,6 +46,8 @@ const Home = ({ match }) => {
     filteredProductsCount,
   } = useSelector((state) => state.products);
 
+  console.log("count", products);
+
   const keyword = match.params.keyword; //for search component
 
   let count = productsCount;
