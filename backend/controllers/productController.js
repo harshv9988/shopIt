@@ -40,6 +40,16 @@ exports.getProduct = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
+//get all products(admin) => /api/v1/admin/products
+exports.getAdminProducts = catchAsyncErrors(async (req, res, next) => {
+  const products = await Product.find();
+
+  res.status(200).json({
+    success: true,
+    products,
+  });
+});
+
 //getsingle product details => /api/v1/product/:id
 
 exports.getsingleProduct = catchAsyncErrors(async (req, res, next) => {
@@ -138,7 +148,7 @@ exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
   });
 });
 
-//get prouct reviews  /api/v1/review
+//get product reviews  /api/v1/review
 exports.getProductReview = catchAsyncErrors(async (req, res, next) => {
   const product = await Product.findById(req.query.id);
   res.status(200).json({

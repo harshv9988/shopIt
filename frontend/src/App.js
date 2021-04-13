@@ -21,6 +21,10 @@ import OrderDetails from "./components/order/OrderDetails";
 
 import Cart from "./components/cart/Cart";
 
+//admin
+import dashboard from "./components/admin/Dashboard";
+import ProductsList from "./components/admin/ProductsList";
+
 import ProtectedRoute from "./components/route/ProtectedRoute";
 
 import { loadUser } from "./actions/userActions";
@@ -29,6 +33,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Dashboard from "./components/admin/Dashboard";
 
 function App() {
   const dispatch = useDispatch();
@@ -83,6 +88,18 @@ function App() {
           <Route path="/password/reset/:token" component={NewPassword} exact />
           <Route path="/cart" component={Cart} exact />
         </div>
+        <ProtectedRoute
+          path="/dashboard"
+          isAdmin={true}
+          component={Dashboard}
+          exact
+        />
+        <ProtectedRoute
+          path="/admin/products"
+          isAdmin={true}
+          component={ProductsList}
+          exact
+        />
         <Footer />
       </div>
     </Router>
