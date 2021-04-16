@@ -12,7 +12,9 @@ const OrderDetails = ({ match }) => {
   const alert = useAlert();
   const dispatch = useDispatch();
 
-  const { loading, error, order } = useSelector((state) => state.orderDetails);
+  const { loading, error, order = {} } = useSelector(
+    (state) => state.orderDetails
+  );
 
   const {
     shippingInfo,
