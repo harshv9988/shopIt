@@ -13,7 +13,7 @@ import { allUsers } from "../../actions/userActions";
 const Dashboard = () => {
   const dispatch = useDispatch();
 
-  const { products } = useSelector((state) => state.products);
+  const { products = [] } = useSelector((state) => state.products); //for condition when n product is present
   const { orders, totalAmount, loading } = useSelector(
     (state) => state.allOrders
   );
