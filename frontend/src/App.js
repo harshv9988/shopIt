@@ -22,7 +22,7 @@ import OrderDetails from "./components/order/OrderDetails";
 import Cart from "./components/cart/Cart";
 
 //admin
-import dashboard from "./components/admin/Dashboard";
+import Dashboard from "./components/admin/Dashboard";
 import ProductsList from "./components/admin/ProductsList";
 import NewProduct from "./components/admin/NewProduct";
 import UpdateProduct from "./components/admin/UpdateProduct";
@@ -30,6 +30,7 @@ import OrdersList from "./components/admin/OrdersList";
 import ProcessOrder from "./components/admin/ProcessOrder";
 import UsersList from "./components/admin/UsersList";
 import UpdateUser from "./components/admin/UpdateUser";
+import ProductReviews from "./components/admin/ProductReviews";
 
 import ProtectedRoute from "./components/route/ProtectedRoute";
 
@@ -41,7 +42,7 @@ import { useDispatch } from "react-redux";
 import axios from "axios";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
-import Dashboard from "./components/admin/Dashboard";
+
 import { userReducer } from "./reducers/userReducer";
 
 function App() {
@@ -145,6 +146,12 @@ function App() {
           path="/admin/user/:id"
           isAdmin={true}
           component={UpdateUser}
+          exact
+        />
+        <ProtectedRoute
+          path="/admin/reviews"
+          isAdmin={true}
+          component={ProductReviews}
           exact
         />
         {!loading && user && user.role !== "admin" && <Footer />}
