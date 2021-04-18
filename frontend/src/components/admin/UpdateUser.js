@@ -39,7 +39,7 @@ const UpdateUser = ({ history, match }) => {
       alert.success("User updated successfully");
 
       history.push("/admin/users");
-
+      dispatch(getUserDetails(userId));
       dispatch({
         type: UPDATE_USER_RESET,
       });
