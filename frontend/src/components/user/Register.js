@@ -60,7 +60,9 @@ const Register = ({ history }) => {
         }
       };
 
-      reader.readAsDataURL(e.target.files[0]);
+      if (e.target.files.length > 0) {
+        reader.readAsDataURL(e.target.files[0]);
+      }
     } else {
       setUser({ ...user, [e.target.name]: e.target.value });
     }
