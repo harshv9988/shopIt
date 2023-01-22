@@ -1,3 +1,4 @@
+// test
 import axios from "axios";
 import {
   ADD_TO_CART,
@@ -23,17 +24,18 @@ export const addItemToCart = (id, quantity) => async (dispatch, getState) => {
   localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 };
 
-export const removeItemFromCart = (id, quantity) => async (
-  dispatch,
-  getState
-) => {
-  dispatch({
-    type: REMOVE_ITEM_CART,
-    payload: id,
-  });
+export const removeItemFromCart =
+  (id, quantity) => async (dispatch, getState) => {
+    dispatch({
+      type: REMOVE_ITEM_CART,
+      payload: id,
+    });
 
-  localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
-};
+    localStorage.setItem(
+      "cartItems",
+      JSON.stringify(getState().cart.cartItems)
+    );
+  };
 
 export const saveShippingInfo = (data) => async (dispatch) => {
   dispatch({
